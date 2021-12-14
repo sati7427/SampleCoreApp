@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Extensions.Configuration;
+using SampleApp.Data;
 
 namespace SampleApp.Controllers
 {
@@ -16,16 +17,26 @@ namespace SampleApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private IConfiguration Configg;
+        private ApplicationDbContext Context;
 
-        public HomeController(ILogger<HomeController> logger,IConfiguration Conff)
+        public HomeController(ILogger<HomeController> logger,IConfiguration Conff, ApplicationDbContext Contextt)
         {
-            _logger = logger;Configg = Conff;
+            _logger = logger;
+            Configg = Conff;
+            Context = Contextt;
         }
 
         public IActionResult Index()
         {
+            ForUser sa = new() { UserName="saa",Password="saa"};
+            Context.UserDetails.Add(sa);
             return View();
         }
+        //[HttpPost]
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
         public string sa()
         {
             SqlConnection Con = new SqlConnection(Configg.GetConnectionString("MyConnection"));
